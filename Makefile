@@ -1,6 +1,6 @@
 env:
 	python3 -m venv .venv
-	source .venv/bin/activate
+	. .venv/bin/activate
 
 update-deps:
 	pip-compile --upgrade
@@ -16,7 +16,15 @@ update: update-deps init
 .PHONY: update-deps init update
 
 lint:
-	echo "Hello World"
+	flake8 ./src
 
-say_hello:
-	echo "Hello World"
+format:
+	black ./src
+
+clean:
+	rm -rf *.egg-info
+	rm -rf build
+	rm -rf dist
+	rm -rf .pytest_cache
+	# Remove all pycache
+	find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf

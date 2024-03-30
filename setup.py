@@ -7,6 +7,8 @@ setup(
     include_package_data=True,
     install_requires=[
         'Flask',
+        'redis',
+        'pip-tools',
         # Add any other dependencies your project requires
     ],
     entry_points='''
