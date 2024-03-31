@@ -29,15 +29,15 @@ class ConnectRedis:
             print(f"Unexpected Error while connecting to Redis :: {err1}")
         return False
 
-    def get_url(self, url_hash) -> str | None:
+    def get_url(self, url_hash) -> tuple[bool, str]:
         try:
             r = self.get_conn()
-            return r.get(url_hash)
+            return True, r.get(url_hash)
         except redis.ConnectionError as err:
             print(f"Connection Error connecting Redis :: {err}")
         except Exception as err1:
             print(f"Unexpected Error while connecting to Redis :: {err1}")
-        return None
+        return False, None
 
 
 if __name__ == "__main__":
@@ -47,7 +47,6 @@ if __name__ == "__main__":
     #     r.set_url(str(i), )
     t = []
     s_t = time.time()
-    for i in range(10000):
-        t.append(r.get_url(str(i + 2)))
+    t = r.get_url("dasdsa")
     e_t = time.time()
-    print(f"Result = {t}, time taken : {e_t - s_t}")
+    print(f"Result = {type(t)}, time taken : {e_t - s_t}")

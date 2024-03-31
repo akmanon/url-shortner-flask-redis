@@ -1,6 +1,6 @@
 from validators import url as valid_url
 from urllib.parse import urlparse
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, redirect
 from . import utils
 from . import db
 
@@ -20,9 +20,7 @@ def shortner():
     if not valid_url(url_user):
         return (
             jsonify(
-                {
-                    "error": "Invalid URL format: should be like this https://www.example.com"
-                }
+                {"error": "Bad Request - Invalid URL provided. https://www.example.com"}
             ),
             400,
         )
@@ -36,12 +34,25 @@ def shortner():
     if resp:
         return jsonify({"shorten_url": f"{shorten_url}"}), 200
 
-    return "Unexpected Error While shortening the URl Please try later"
+    return (
+        jsonify(
+            {"error": "An unexpected error occurred while processing the request."}
+        ),
+        500,
+    )
 
 
 @app.route("/<path:url>")
 def wildcard_route(url):
-    return f"You entered: {url}"
+    status, data_url = redis_conn.get_url(url)
+    if status:
+        if data_url is not None:
+            return redirect(data_url)
+        return (
+            jsonify({"error": "Not Found - The requested URL was not found."}),
+            404,
+        )
+    return jsonify({"error": "Unexpected error while processing the request"}), 400
 
 
 if __name__ == "__main__":
