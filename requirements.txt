@@ -18,6 +18,8 @@ colorama==0.4.6
     #   click
 flask==3.0.2
     # via URL-Shortner-Flask-Redis (setup.py)
+gunicorn==21.2.0
+    # via URL-Shortner-Flask-Redis (setup.py)
 itsdangerous==2.1.2
     # via flask
 jinja2==3.1.3
@@ -27,7 +29,9 @@ markupsafe==2.1.5
     #   jinja2
     #   werkzeug
 packaging==24.0
-    # via build
+    # via
+    #   build
+    #   gunicorn
 pip-tools==7.4.1
     # via URL-Shortner-Flask-Redis (setup.py)
 pyproject-hooks==1.0.0
@@ -36,9 +40,9 @@ pyproject-hooks==1.0.0
     #   pip-tools
 redis==5.0.3
     # via URL-Shortner-Flask-Redis (setup.py)
-validators==0.24.0
+validators==0.28.0
     # via URL-Shortner-Flask-Redis (setup.py)
-werkzeug==3.0.1
+werkzeug==3.0.2
     # via flask
 wheel==0.43.0
     # via pip-tools

@@ -10,6 +10,7 @@ setup(
         "redis",
         "validators",
         "pip-tools",
+        "gunicorn",
         # Add any other dependencies your project requires
     ],
     entry_points="""
